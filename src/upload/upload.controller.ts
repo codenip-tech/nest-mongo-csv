@@ -5,12 +5,21 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express/multer/interceptors';
+import { diskStorage } from 'multer';
+import { editFileName } from './file.service';
 
 @Controller('upload')
 export class UploadController {
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: editFileName,
+      }),
+    }),
+  )
   async uploadCsv(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+    return { filePath: `${file.filename}` };
   }
 }
