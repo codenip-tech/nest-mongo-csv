@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { People } from './interfaces/people.interface';
+import { People } from './dto/people.dto';
 
 @Injectable()
 export class PeopleService {
@@ -11,5 +11,9 @@ export class PeopleService {
 
   async findAll(): Promise<People[]> {
     return this.peopleModel.find().exec();
+  }
+
+  async save(peopleDTO: People) {
+    this.peopleModel.create(peopleDTO);
   }
 }

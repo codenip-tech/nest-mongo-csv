@@ -13,7 +13,7 @@ services:
       - ./:/app
     user: "appuser"
     working_dir: /app
-    command: tail -f /dev/null
+    command: yarn start:dev
     networks:
       - codenip-nest
 
